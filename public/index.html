@@ -20,6 +20,12 @@
     <script src="lib/foundation/vendor/fastclick.js"></script>
     <script src="lib/select2.js"></script>
 
+    <style>
+      img {
+        max-width:100%; max-height:100%;
+      }
+    </style>
+
 </head>
 <body>
    <div class="off-canvas-wrap docs-wrap" data-offcanvas="">
@@ -227,20 +233,59 @@
 <!--_____________________TEMPLATE BOOK START_____________________ -->
 <!--_______________________________________________________-->
     <script type="text/template" id="bookTemplate">
-
-            <div class="small-2 columns">
-                <div class="bookContainer panel">
-                    <img src="<%= coverImage %>"/>
-                    <aside>
-                        <ul>
-                            <li><%= title %></li>
-                            <li><%= author %></li>
-                            <li><%= releaseDate %></li>
-                            <li><%= keywords %></li>
-                        </ul>
-                    </aside>
-                </div
-        </div>
+          <div class="bookContainer panel">
+              <img src="<%= coverImage %>"/>
+              <aside>
+                 <div class="row">
+                      <div class="small-8">
+                        <div class="row">
+                          <div class="small-3 columns">
+                            <label for="right-label" class="right inline">Title</label>
+                          </div>
+                          <div class="small-9 columns">
+                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= title %>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="small-8">
+                        <div class="row">
+                          <div class="small-3 columns">
+                            <label for="right-label" class="right inline">Author</label>
+                          </div>
+                          <div class="small-9 columns">
+                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= author %>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="small-8">
+                        <div class="row">
+                          <div class="small-3 columns">
+                            <label for="right-label" class="right inline">Release Date</label>
+                          </div>
+                          <div class="small-9 columns">
+                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= releaseDate %>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="small-8">
+                        <div class="row">
+                          <div class="small-3 columns">
+                            <label for="right-label" class="right inline">Keywords</label>
+                          </div>
+                          <div class="small-9 columns">
+                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= keywords %>">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </aside>
+          </div>
     </script>
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE BOOK END_____________________ -->
