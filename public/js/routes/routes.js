@@ -25,7 +25,7 @@ var Router = Backbone.Router.extend({
 	},
 
 	about: function(){
-		var s = new app.AboutView();
+		var aboutView = new app.AboutView();
 		this.AppView.showView(aboutView);
 	},
 
