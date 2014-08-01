@@ -5,37 +5,38 @@ var Router = Backbone.Router.extend({
 		'': 'home',
 		'add': 'editBook',
 		'edit/:id': 'editBook',
-		'about': 'about'
+		'about': 'about',
+		'contact': 'contact'
 	},
 
+	 initialize: function(options){
+	    this.AppView = options.AppView;
+	  },
+	
 	main: function  () {
-		this.changePage(new MainPageView());
+		 var homeView = new app.LibraryView();
+	    this.AppView.showView(homeView);
 	},
 
 	editBook: function(id){
-		var book = new Book({id: id});
-		this.changePage(new BookEditPageView({model: book}));
-		book.fetch();
+		var book = new app.Book({id: id ||'' });
+		var bookEditView = new app.BookEditView({model: book});
+		this.AppView.showView(bookEditView);
 	},
 
 	about: function(){
-		this.changePage(new AboutPageView());
+		var s = new app.AboutView();
+		this.AppView.showView(aboutView);
 	},
 
-	changePage: function(page){
-		$(page.el).attr('data-role', 'page');
-
-		page.render();
-
-		//append page to some target
-
-		//transition to new page
+	contact: function(){
+		var concactView = new app.ContactView();
+		this.AppView.showView(concactView);
 	}
 
 
-
 });
-var app_router = new Router;
+var app_router = new Router({AppView: app.AppView});
 
 
 Backbone.history.start();

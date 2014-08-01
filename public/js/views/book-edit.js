@@ -6,7 +6,7 @@ app.BookEditView = Backbone.View.extend({
 	template: _.template($('#editBookTemplate').html()),
 
 	render: function () {
-		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.html(this.template((this.model ? this.model.toJSON() : {})));
 
 		return this;
 	}
