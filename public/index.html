@@ -17,22 +17,24 @@
     <script src="lib/underscore.js"></script>
     <script src="lib/backbone.js"></script>
     <script src="lib/foundation/js/foundation.min.js"></script>
-    <script src="lib/foundation/vendor/fastclick.js"></script>
-    <script src="lib/select2.js"></script>
-
+    <script src="lib/foundation/js/vendor/fastclick.js"></script>
     <style>
       img {
         max-width:100%; max-height:100%;
+      }
+
+      #mainContent {
+
       }
     </style>
 
 </head>
 <body>
    <div class="off-canvas-wrap docs-wrap" data-offcanvas="">
-  <div class="inner-wrap sticky">
-    <nav class="tab-bar" data-topbar data-options="sticky_on: large">
+  <div class="inner-wrap">
+    <nav class="tab-bar" data-topbar>
       <section class="middle tab-bar-section">
-        <h1 class="title">Foundation</h1>
+        <h1 class="title">Backbone Library</h1>
       </section>
 
       <section class="right-small">
@@ -42,6 +44,7 @@
 
     <aside class="right-off-canvas-menu">
       <ul class="off-canvas-list">
+        <li><a href="#/library">Library</a></li>
         <li><a href="#/add">Add Book</a></li>
         <li><a href="#/settings">Settings</a></li>
         <li><a href="#/about">About</a></li>
@@ -295,7 +298,7 @@
 <!--_____________________TEMPLATE BOOK EDIT START_____________________ -->
 <!--_______________________________________________________-->
     <script type="text/template" id="editBookTemplate">
-        <form>
+        <form id="addBook">
           <div class="row">
             <div class="large-12 columns">
               <label>Tile
@@ -331,7 +334,7 @@
               </label>
             </div>
           </div>
-          <button id="add">Add Book</button>
+          <button id="addBookBtn"><a href="#">Add Book</a></button>
         </form>
     </script>
 <!--_______________________________________________________-->

@@ -2,7 +2,8 @@ var app = app || {};
 
 var Router = Backbone.Router.extend({
 	routes: {
-		'': 'home',
+		'': 'main',
+		'library': 'main',
 		'add': 'editBook',
 		'edit/:id': 'editBook',
 		'about': 'about',
@@ -14,8 +15,8 @@ var Router = Backbone.Router.extend({
 	  },
 	
 	main: function  () {
-		 var homeView = new app.LibraryView();
-	    this.AppView.showView(homeView);
+		 var libraryView = new app.LibraryView();
+	    this.AppView.showView(libraryView);
 	},
 
 	editBook: function(id){
@@ -32,9 +33,7 @@ var Router = Backbone.Router.extend({
 	contact: function(){
 		var concactView = new app.ContactView();
 		this.AppView.showView(concactView);
-	}
-
-
+	},
 });
 var app_router = new Router({AppView: app.AppView});
 
