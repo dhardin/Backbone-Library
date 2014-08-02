@@ -1,7 +1,7 @@
 var app = app || {};
 
-$(function(){
-	var books = [
+
+	books = [
 		{
 			coverImage: 'img/ejs.png',
 			title: 'JavaScript: The Good Parts',
@@ -20,6 +20,6 @@ $(function(){
 
 		}
 	];
+ app.LibraryCollection = new app.Library(books);
 
-	new app.LibraryView(books);
-})
+	//new app.LibraryView(books);

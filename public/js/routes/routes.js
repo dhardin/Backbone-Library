@@ -15,7 +15,7 @@ var Router = Backbone.Router.extend({
 	  },
 	
 	main: function  () {
-		 var libraryView = new app.LibraryView();
+		 var libraryView = new app.LibraryView(app.books);
 	    this.AppView.showView(libraryView);
 	},
 

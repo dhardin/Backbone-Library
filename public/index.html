@@ -22,9 +22,16 @@
       img {
         max-width:100%; max-height:100%;
       }
-
-      #mainContent {
-
+body{
+    margin:0; 
+  padding:0; 
+  height:100%; 
+}
+      #mainContent, .off-canvas-wrap, .inner-wrap{
+          height: 100%;
+      }
+      #mainContent{
+        overflow-y: scroll;
       }
     </style>
 
@@ -243,10 +250,10 @@
                       <div class="small-8">
                         <div class="row">
                           <div class="small-3 columns">
-                            <label for="right-label" class="right inline">Title</label>
+                            <label for="title" class="right inline">Title</label>
                           </div>
                           <div class="small-9 columns">
-                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= title %>">
+                            <input type="text" id="title" placeholder="Inline Text Input" value="<%= title %>">
                           </div>
                         </div>
                       </div>
@@ -255,10 +262,10 @@
                       <div class="small-8">
                         <div class="row">
                           <div class="small-3 columns">
-                            <label for="right-label" class="right inline">Author</label>
+                            <label for="author" class="right inline">Author</label>
                           </div>
                           <div class="small-9 columns">
-                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= author %>">
+                            <input type="text" id="author" placeholder="Inline Text Input" value="<%= author %>">
                           </div>
                         </div>
                       </div>
@@ -267,10 +274,10 @@
                       <div class="small-8">
                         <div class="row">
                           <div class="small-3 columns">
-                            <label for="right-label" class="right inline">Release Date</label>
+                            <label for="releaseDate" class="right inline">Release Date</label>
                           </div>
                           <div class="small-9 columns">
-                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= releaseDate %>">
+                            <input type="text" id="releaseDate" placeholder="Inline Text Input" value="<%= releaseDate %>">
                           </div>
                         </div>
                       </div>
@@ -279,10 +286,10 @@
                       <div class="small-8">
                         <div class="row">
                           <div class="small-3 columns">
-                            <label for="right-label" class="right inline">Keywords</label>
+                            <label for="keywords" class="right inline">Keywords</label>
                           </div>
                           <div class="small-9 columns">
-                            <input type="text" id="right-label" placeholder="Inline Text Input" value="<%= keywords %>">
+                            <input type="text" id="keywords" placeholder="Inline Text Input" value="<%= keywords %>">
                           </div>
                         </div>
                       </div>
@@ -298,44 +305,44 @@
 <!--_____________________TEMPLATE BOOK EDIT START_____________________ -->
 <!--_______________________________________________________-->
     <script type="text/template" id="editBookTemplate">
-        <form id="addBook">
+        <div id="addBook">
           <div class="row">
             <div class="large-12 columns">
               <label>Tile
-                <input type="text" placeholder="Title" />
+                <input id="title" type="text" placeholder="Title" />
               </label>
             </div>
           </div>
           <div class="row">
             <div class="large-12 columns">
               <label>Author
-                <input type="text" placeholder="Author" />
+                <input  id="author"  type="text" placeholder="Author" />
               </label>
             </div>
           </div>
           <div class="row">
             <div class="large-12 columns">
               <label>Release Date
-                <input type="text" placeholder="Release Date" />
+                <input  id="releaseDate" type="text" placeholder="Release Date" />
               </label>
             </div>
           </div>
           <div class="row">
             <div class="large-12 columns">
               <label>Keywords
-                <input type="text" placeholder="Keywords" />
+                <input  id="keywords" type="text" placeholder="Keywords" />
               </label>
             </div>
           </div>
            <div class="row">
             <div class="large-12 columns">
               <label>Cover Source
-                <input type="text" placeholder="ex: http://ecx.images-amazon.com/images/I/71M32wxOOmL.jpg" />
+                <input  id="coverImage" type="text" placeholder="ex: http://ecx.images-amazon.com/images/I/71M32wxOOmL.jpg" />
               </label>
             </div>
           </div>
-          <button id="addBookBtn"><a href="#">Add Book</a></button>
-        </form>
+          <button id="addBookBtn">Add Book</button>
+        </div>
     </script>
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE BOOK EDIT END_____________________ -->
@@ -362,10 +369,11 @@
     <script src="js/views/library.js"></script>
      <script src="js/views/about.js"></script>
     <script src="js/views/contact.js"></script>
+    <!-- Application -->
+    <script src="js/app.js"></script>
     <!-- Router -->
     <script src="js/routes/routes.js"></script>
      
-    <!-- Application -->
-    <script src="js/app.js"></script>
+    
 </body>
 </html>
