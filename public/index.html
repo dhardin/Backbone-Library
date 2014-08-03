@@ -18,7 +18,13 @@
     <script src="lib/backbone.js"></script>
     <script src="lib/foundation/js/foundation.min.js"></script>
     <script src="lib/foundation/js/vendor/fastclick.js"></script>
-    <style>
+    <script src="https://apis.google.com/js/platform.js">  {parsetags: 'explicit'}</script>
+<!--<div class="g-savetodrive"
+   data-src="//example.com/path/to/myfile.pdf"
+   data-filename="My Statement.pdf"
+   data-sitename="My Company Name">
+</div>
+-->    <style>
       img {
         max-width:100%; max-height:100%;
       }
@@ -43,8 +49,9 @@ body{
       <section class="middle tab-bar-section">
         <h1 class="title">Backbone Library</h1>
       </section>
-
+           
       <section class="right-small">
+       
         <a class="right-off-canvas-toggle menu-icon"><span></span></a>
       </section>
     </nav>
@@ -53,6 +60,7 @@ body{
       <ul class="off-canvas-list">
         <li><a href="#/library">Library</a></li>
         <li><a href="#/add">Add Book</a></li>
+        <li><a class="g-savetodrive" href="#">Back-up Data</a></li>
         <li><a href="#/settings">Settings</a></li>
         <li><a href="#/about">About</a></li>
         <li><a href="#/contact">Contact</a></li>
@@ -73,7 +81,12 @@ body{
 <!--_____________________TEMPLATE LIBRARY CONTENT START_____________________ -->
 <!--_______________________________________________________-->
 <script type="text/template" id="libraryTemplate">
-       <div id="books"></div>
+  <div class="row">
+    <div class="large-12 columns">
+        <input id="search" type="text" placeholder="Search" />
+    </div>
+  </div>
+  <div id="books"></div>
 </script>
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE LIBRARY CONTENT END_____________________ -->
@@ -354,6 +367,17 @@ body{
 
     <script type="text/javascript">
          $(document).foundation();
+
+         $('.g-savetodrive').on('click', function(e){
+            $this = $(this);
+
+            
+
+            $this.attr('data-src', 'data:application/json;base64,' + 
+                              window.btoa(unescape(encodeURIComponent(JSON.stringify(app.LibraryCollection.toJSON())))))
+                 .attr('data-filename', 'Backbone-Library.json')
+                 .attr('data-sitename', 'Backbone Library');
+         });
     </script>
 
   <!-- Utilities -->
