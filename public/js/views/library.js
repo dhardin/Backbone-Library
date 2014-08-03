@@ -18,26 +18,42 @@ app.LibraryView = Backbone.View.extend({
 	},
 
 	render: function (collection, filterText) {
+		var i = 0, MAX_ROW_ITEMS = 4, $target;
 		this.$el.html(this.template());
 		this.$books = this.$el.find('#books'); 	
 		this.$filter = this.$el.find('#search');
-		this.collection.each(function(item){
-			this.renderBook(item);
+		this.collection.each(function(item){	
+			if (i % MAX_ROW_ITEMS == 0){
+				$target = $('<div class="rows"></div>');
+				this.$books.append($target);
+
+			}
+			i++;
+			this.renderBook(item, $target);
+
 		}, this);
 	},
 
 	renderList: function(collection){
+		var i = 0, MAX_ROW_ITEMS = 4, $target;
 		this.$books.html('');
 		collection.each(function(item){
-			this.renderBook(item);
+			if (i % MAX_ROW_ITEMS == 0){
+				$target = $('<div class="rows"></div>');
+				this.$books.append($target);
+
+			}
+			i++;
+			this.renderBook(item, $target);
+
 		}, this);
 	},
 
-	renderBook : function(item){
+	renderBook : function(item, $target){
 		var bookView = new app.BookView({
 			model: item
 		});
-		this.$books.append(bookView.render().el);
+		$target.append(bookView.render().el);
 	},
 
 	search: function(e){
