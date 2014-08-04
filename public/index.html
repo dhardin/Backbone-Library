@@ -7,6 +7,7 @@
 
   <!-- Third Party Stylesheets-->
   <link rel="stylesheet" type="text/css" href="lib/foundation/css/foundation.css">
+  <link rel="stylesheet" type="text/css" href="lib/foundation/css/foundation-icons.css">
   <link rel="stylesheet" type="text/css" href="lib/select2/select2.css">
 
   <!-- Our Scripts -->
@@ -24,10 +25,15 @@
    data-filename="My Statement.pdf"
    data-sitename="My Company Name">
 </div>
--->    <style>
+-->   
+ <style>
 img {
-  height: 200px;       
+    height: 200px;       
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
 }
+
 body{
   margin:0; 
   padding:0; 
@@ -39,6 +45,28 @@ body{
 #mainContent{
   overflow-y: scroll;
 }
+
+.rows button, #saveBookBtn {
+    width: 100%;
+  }
+
+  #search{
+    padding-left: 20px;
+    display: inline-block;
+    width: 90%;
+    background: rgba(255,255,255, 0.6);
+
+  }
+
+  .search-field{
+    padding: 20px;
+  }
+
+  .search-field i{
+    color: rgb(119,119,119);
+    margin-right: -20px;
+  }
+
 </style>
 
 </head>
@@ -81,10 +109,9 @@ body{
 <!--_____________________TEMPLATE LIBRARY CONTENT START_____________________ -->
 <!--_______________________________________________________-->
 <script type="text/template" id="libraryTemplate">
-  <div class="row">
-    <div class="large-12 columns">
-      <input id="search" type="text" placeholder="Search" />
-    </div>
+  <div class="search-field">
+    <i class="fi-magnifying-glass"></i>
+      <input type="text" id="search" placeholder="Search">
   </div>
   <div id="books"></div>
 </script>
@@ -258,10 +285,16 @@ body{
 <script type="text/template" id="bookTemplate">
   <div class="small-12 medium-6 large-3 columns">
     <div class="bookContainer panel">
-      <img src="<%= coverImage %>"/>
-      <br/><br/>
-      <a href="#/edit/" class="button">Edit</a> 
-      <a href="#/delete/" class="button">Delete</a>
+      <div class="imgContainer"><img src="<%= coverImage %>"/></div>
+      <br/>
+      <div class="rows">
+        <div class="small-6 medium-12 large-12 columns">
+          <button id="editBookBtn">Edit</button> 
+        </div>
+        <div class="small-6 medium-12 large-12 columns">
+             <button id="deleteBookBtn">Delete</button> 
+        </div>
+      </div>
       <div>
         <label for="title" class="left inline">Title</label>
         <input type="text" id="title" placeholder="" value="<%= title %>" disabled="true">
@@ -289,43 +322,43 @@ body{
 <!--_____________________TEMPLATE BOOK EDIT START_____________________ -->
 <!--_______________________________________________________-->
 <script type="text/template" id="editBookTemplate">
-  <div id="addBook">
+  <div id="saveBook">
     <div class="row">
       <div class="large-12 columns">
         <label>Tile
-          <input id="title" type="text" placeholder="Title" />
+          <input id="title" type="text" placeholder="Title" value="<%= title %>"/>
         </label>
       </div>
     </div>
     <div class="row">
       <div class="large-12 columns">
         <label>Author
-          <input  id="author"  type="text" placeholder="Author" />
+          <input  id="author"  type="text" placeholder="Author" value="<%= author %>"/>
         </label>
       </div>
     </div>
     <div class="row">
       <div class="large-12 columns">
         <label>Release Date
-          <input  id="releaseDate" type="text" placeholder="Release Date" />
+          <input  id="releaseDate" type="text" placeholder="Release Date" value="<%= releaseDate %>"/>
         </label>
       </div>
     </div>
     <div class="row">
       <div class="large-12 columns">
         <label>Keywords
-          <input  id="keywords" type="text" placeholder="Keywords" />
+          <input  id="keywords" type="text" placeholder="Keywords" value="<%= keywords %>"/>
         </label>
       </div>
     </div>
     <div class="row">
       <div class="large-12 columns">
         <label>Cover Source
-          <input  id="coverImage" type="text" placeholder="ex: http://ecx.images-amazon.com/images/I/71M32wxOOmL.jpg" />
+          <input  id="coverImage" type="text" placeholder="ex: http://ecx.images-amazon.com/images/I/71M32wxOOmL.jpg" value="<%= coverImage %>"/>
         </label>
       </div>
     </div>
-    <button id="addBookBtn">Add Book</button>
+    <button id="saveBookBtn">Save Book</button>
   </div>
 </script>
 <!--_______________________________________________________-->

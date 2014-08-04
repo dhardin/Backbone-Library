@@ -6,7 +6,7 @@ app.BookEditView = Backbone.View.extend({
 	template: _.template($('#editBookTemplate').html()),
 
 	events:{
-		'click #addBookBtn':'addBook'
+		'click #saveBookBtn':'saveBook'
 	},
 
 	render: function () {
@@ -15,15 +15,25 @@ app.BookEditView = Backbone.View.extend({
 		return this;
 	},
 
-	addBook: function( e ) {
+	saveBook: function( e ) {
 		e.preventDefault();
-		var formData = {};
-		$( '#addBook' ).find( 'input' ).each( function( i, el ) {
-		if( $( el ).val() != '' ){
-			formData[ el.id ] = $( el ).val();
+		var formData = {}, book;
+
+
+		$( '#saveBook' ).find( 'input' ).each( function( i, el ) {
+			if( $( el ).val() != '' ){
+				formData[ el.id ] = $( el ).val();
 			}
 		});
-		app.LibraryCollection.add( new app.Book( formData ) );
+
+		if (app.LibraryCollection.get({cid: this.model.cid})){
+			book = this.model;
+			book.set(formData);
+		} else {
+			book = new app.Book( formData );
+			app.LibraryCollection.add(book);
+		}
+		
 		app_router.navigate('library', { trigger: true });
 	
 	}

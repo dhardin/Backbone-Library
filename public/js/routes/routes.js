@@ -20,7 +20,7 @@ var Router = Backbone.Router.extend({
 	},
 
 	editBook: function(id){
-		var book = new app.Book({id: id ||'' });
+		var book = (id ? app.LibraryCollection.get({cid: id}) : new app.Book());
 		var bookEditView = new app.BookEditView({model: book});
 		this.AppView.showView(bookEditView);
 	},
