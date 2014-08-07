@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.example.backbone-library" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Backbone Library</name>
+    <description>
+        A library application that uses the Backbone and Foundation frameworks.
+    </description>
+    <author email="dhardin07@gmail.com" href="http://cordova.io">
+        Dustin Hardin
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

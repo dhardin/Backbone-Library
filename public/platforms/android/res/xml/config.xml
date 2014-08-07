@@ -41,6 +41,8 @@
     <gap:platform name="android" />
     <gap:platform name="winphone" />
     <feature name="http://api.phonegap.com/1.0/file" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
     <icon gap:density="xhdpi" gap:platform="android" src="img/icon/hdpi.png" />
     <icon gap:density="xxhdpi" gap:platform="android" src="img/icon/ldpi.png" />
     <icon gap:density="xxxhdpi" gap:platform="android" src="img/icon/xhdpi.png" />
@@ -50,4 +52,5 @@
     <gap:splash gap:density="xhdpi" gap:platform="android" src="img/splash/xhdpi.png" />
     <gap:splash gap:density="xxhdpi" gap:platform="android" src="img/splash/xxhdpi.png" />
     <access origin="*" />
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 </widget>
