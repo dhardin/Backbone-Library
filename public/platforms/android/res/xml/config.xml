@@ -39,7 +39,6 @@
     <preference name="LoadUrlTimeoutValue" value="20000" />
     <preference name="disable-cursor" value="false" />
     <gap:platform name="android" />
-    <gap:platform name="winphone" />
     <feature name="http://api.phonegap.com/1.0/file" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
