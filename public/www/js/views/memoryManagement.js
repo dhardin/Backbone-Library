@@ -21,7 +21,7 @@ app.memoryManagementView = Backbone.View.extend({
 
 		//call the appropriate api to save to the data
 		//to using the data previously packaged.
-		switch(filetype){
+		switch(this.$saveTo.val()){
 			case 'local':
 				DownloadFile(data, '', filename);
 				break;
