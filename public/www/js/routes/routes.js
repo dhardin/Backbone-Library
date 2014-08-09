@@ -7,7 +7,8 @@ var Router = Backbone.Router.extend({
 		'add': 'editBook',
 		'edit/:id': 'editBook',
 		'about': 'about',
-		'contact': 'contact'
+		'contact': 'contact',
+		'save-load': 'memoryManagement'
 	},
 
 	 initialize: function(options){
@@ -34,8 +35,13 @@ var Router = Backbone.Router.extend({
 		var concactView = new app.ContactView();
 		this.AppView.showView(concactView);
 	},
-});
-var app_router = new Router({AppView: app.AppView});
 
+	memoryManagement: function(){
+		var memoryManagemetView = new app.memoryManagementView();
+		this.AppView.showView(memoryManagemetView);
+	}
+});
+
+var app_router = new Router({AppView: app.AppView});
 
 Backbone.history.start();

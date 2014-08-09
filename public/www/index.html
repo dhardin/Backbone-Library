@@ -18,6 +18,7 @@
 <script src="lib/underscore.js"></script>
 <script src="lib/backbone.js"></script>
 <script src="lib/foundation/js/foundation.min.js"></script>
+<script src="lib/foundation/js/foundation.dropdown.js"></script>
 <script src="lib/foundation/js/vendor/fastclick.js"></script>
 <script src="https://apis.google.com/js/platform.js">  {parsetags: 'explicit'}</script>
 <script src="lib/Cordova.js"></script>
@@ -27,12 +28,12 @@
    data-sitename="My Company Name">
 </div>
 -->   
- <style>
+<style>
 img {
-    height: 200px;       
-    display: block;
-    margin-left: auto;
-    margin-right: auto }
+  height: 200px;       
+  display: block;
+  margin-left: auto;
+  margin-right: auto }
 }
 
 body{
@@ -48,25 +49,25 @@ body{
 }
 
 .rows button, #saveBookBtn {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-  #search{
-    padding-left: 20px;
-    display: inline-block;
-    width: 90%;
-    background: rgba(255,255,255, 0.6);
+#search{
+  padding-left: 20px;
+  display: inline-block;
+  width: 90%;
+  background: rgba(255,255,255, 0.6);
 
-  }
+}
 
-  .search-field{
-    padding: 20px;
-  }
+.search-field{
+  padding: 20px;
+}
 
-  .search-field i{
-    color: rgb(119,119,119);
-    margin-right: -20px;
-  }
+.search-field i{
+  color: rgb(119,119,119);
+  margin-right: -20px;
+}
 
 </style>
 
@@ -89,7 +90,7 @@ body{
       <ul class="off-canvas-list">
         <li><a href="#/library">Library</a></li>
         <li><a href="#/add">Add Book</a></li>
-        <li><a class="g-savetodrive" href="#">Back-up Data</a></li>
+        <li><a href="#/save-load" href="#">Save/Load</a></li>
         <li><a href="#/settings">Settings</a></li>
         <li><a href="#/about">About</a></li>
         <li><a href="#/contact">Contact</a></li>
@@ -112,7 +113,7 @@ body{
 <script type="text/template" id="libraryTemplate">
   <div class="search-field">
     <i class="fi-magnifying-glass"></i>
-      <input type="text" id="search" placeholder="Search">
+    <input type="text" id="search" placeholder="Search">
   </div>
   <div id="books"></div>
 </script>
@@ -293,27 +294,27 @@ body{
           <button id="editBookBtn">Edit</button> 
         </div>
         <div class="small-6 medium-12 large-12 columns">
-             <button id="deleteBookBtn">Delete</button> 
-        </div>
-      </div>
-      <div>
-        <label for="title" class="left inline">Title</label>
-        <input type="text" id="title" placeholder="" value="<%= title %>" disabled="true">
-      </div>
-      <div>
-        <label for="author" class="left inline">Author</label>
-        <input type="text" id="author" placeholder="" value="<%= author %>" disabled="true">
-      </div>
-      <div>
-        <label for="releaseDate" class="left inline">Release Date</label>
-        <input type="text" id="releaseDate" placeholder="" value="<%= releaseDate %>"disabled="true">
-      </div>
-      <div>
-        <label for="keywords" class="left inline">Keywords</label>
-        <input type="text" id="keywords" placeholder="" value="<%= keywords %>" disabled="true">
-      </div>
+         <button id="deleteBookBtn">Delete</button> 
+       </div>
+     </div>
+     <div>
+      <label for="title" class="left inline">Title</label>
+      <input type="text" id="title" placeholder="" value="<%= title %>" disabled="true">
+    </div>
+    <div>
+      <label for="author" class="left inline">Author</label>
+      <input type="text" id="author" placeholder="" value="<%= author %>" disabled="true">
+    </div>
+    <div>
+      <label for="releaseDate" class="left inline">Release Date</label>
+      <input type="text" id="releaseDate" placeholder="" value="<%= releaseDate %>"disabled="true">
+    </div>
+    <div>
+      <label for="keywords" class="left inline">Keywords</label>
+      <input type="text" id="keywords" placeholder="" value="<%= keywords %>" disabled="true">
     </div>
   </div>
+</div>
 </script>
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE BOOK END_____________________ -->
@@ -367,6 +368,69 @@ body{
 <!--_______________________________________________________-->
 
 <!--_______________________________________________________-->
+<!--_____________________TEMPLATE MEMORY MANAGEMENT START_____________________ -->
+<!--_______________________________________________________-->
+<script type="text/template"  id="memoryManagementTemplate">
+  <div>
+    <div class="row">
+     <div class="small-12">
+       <h4>Save To</h4>
+     </div>
+     <div class="small-12 medium-4 columns">
+       <h5>Local Storage</h5>
+       <div class="switch large">
+        <input id="saveToLocal" type="radio" name="saveTo" value="local"> 
+        <label for="saveToLocal">Local Storage</label>
+      </div>
+    </div> 
+    <div class="small-12 medium-4 columns">
+      <h5>Google Drive</h5>
+      <div class="switch large">
+       <input id="saveToGoogle" type="radio" name="saveTo" value="googleDrive">
+       <label for="saveToGoogle">Google Drive</label>
+     </div>
+   </div> 
+   <div class="small-12 medium-4 columns">
+    <h5>Dropbox</h5>
+    <div class="switch large">
+     <input id="saveToDropbox" type="radio" name="saveTo" value="dropbox">
+     <label for="saveToDropbox">Dropbox</label>
+   </div> 
+ </div>
+</div>
+<hr>
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Save As</h4>
+  </div>
+  <div class="small-12 medium-6 columns">
+    <h5>CSV</h5>
+    <div class="switch large">
+      <input id="saveAsCSV" type="radio" name="saveAs" value="csv"> 
+      <label for="saveAsCSV">CSV</label>
+    </div>
+  </div> 
+  <div class="small-12 medium-6 columns">
+    <h5>JSON</h5>
+    <div class="switch large">
+     <input id="saveAsJSON" type="radio" name="saveAs" value="json">
+     <label for="saveAsJSON">JSON</label>
+   </div>
+ </div> 
+</div>
+<div class="row">
+ <div class="large-12 columns">
+  <button id="saveBtn">Save Collection</button>
+</div>
+</div>
+</script>
+
+<!--_______________________________________________________-->
+<!--_____________________TEMPLATE MEMORY MANAGEMENT END_____________________ -->
+<!--_______________________________________________________-->
+
+
+<!--_______________________________________________________-->
 <!--_____________________TEMPLATE END_____________________ -->
 <!--_______________________________________________________-->
 
@@ -378,7 +442,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 // Cordova is ready
 //
 function onDeviceReady() {
-    navigator.splashscreen.hide();
+  navigator.splashscreen.hide();
 }
 
 $(document).foundation();
@@ -402,12 +466,14 @@ $('.g-savetodrive').on('click', function(e){
 <script src="js/models/library.js"></script>
 <script src="js/models/about.js"></script>
 <script src="js/models/contact.js"></script>
+<script src="js/models/memoryManagement.js"></script>
 <!-- Views -->
 <script src="js/views/book.js"></script>
 <script src="js/views/book-edit.js"></script>
 <script src="js/views/library.js"></script>
 <script src="js/views/about.js"></script>
 <script src="js/views/contact.js"></script>
+<script src="js/views/memoryManagement.js"></script>
 <!-- Application -->
 <script src="js/app.js"></script>
 <!-- Router -->
