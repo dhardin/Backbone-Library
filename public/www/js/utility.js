@@ -85,12 +85,12 @@ if (URL == null && Folder_Name == null && File_Name == null) {
 }
 else {
     //checking Internet connection availablity
-    //var networkState = navigator.connection.type;
-    //if (networkState == Connection.NONE) {
-     //   return;
-  //  } else {
+    var networkState = navigator.connection.type;
+    if (networkState == Connection.NONE) {
+        return;
+    } else {
         download(URL, Folder_Name, File_Name); //If available download function call
-  //  }
+   }
   }
 }
 
