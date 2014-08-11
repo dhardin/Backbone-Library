@@ -1,4 +1,10 @@
-var app = app || {};
+var app = app || {},
+	state_map = {
+		folderName: '',
+		fileName : '',
+		uri: '',
+		data: ''
+	};
 
 Backbone.View.prototype.close = function(){
   this.remove();
@@ -69,46 +75,101 @@ app.Utility = {
 	        alert("Invalid data");
 	        return;
 	    }   
-	 
-	    //Initialize file format you want csv or xls
-	    var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-
-	    return uri;
+	 	
+	 	return CSV;
+	   
 	}
 };
 
+function encodeData(data, type){
+	   var mime_type = "",
+	   	   encoding = "",
+	   	   encodedData = encodeURI(data);
+
+	switch(type){
+		case 'json':
+			mime_type = 'text/plain';
+			encoding = 'utf-8';
+		break;
+		case 'csv':
+			mime_type = 'text/csv';
+			encoding = 'utf-8';
+		break;
+		case 'png':
+			mine_type = 'image/png';
+			encoding = 'utf-8';
+			break;
+		case 'jpg':
+			mine_type = 'image/jpg';
+			encoding = 'utf-8';
+		break;
+		case 'gif':
+			mine_type = 'image/gif';
+			encoding = 'utf-8';
+			break;
+		default: 
+			mime_type = 'text/plain';
+			encoding = 'utf-8';
+			break;
+	};
+
+	uri = 'data:' + mime_type + ';charset=' + encoding + ',' + encodedData;
+
+	return uri;
+}
+
+function writeFile(data, folderName, fileName){
+	if (!data || !folderName || !fileName){
+		return;
+	}
+	state_map.folderName = folderName;
+	state_map.fileName = fileName;
+	state_map.data = data;
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, writeDataToFile, fileSystemFail);
+}
+
+function writeDataToFile(fileSystem){
+ //	var directoryEntry = fileSystem.root; // to get root path of directory
+    //directoryEntry.getDirectory(state_map.folderName, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+   // var rootdir = fileSystem.root;
+   
+	fileSystem.root.getFile(state_map.fileName, {create: true, exclusive: false}, gotFileEntry, onFail);
+}
+
 //First step check parameters mismatch and checking network connection if available call    download function
-function DownloadFile(URL, Folder_Name, File_Name) {
-//Parameters mismatch check
-if (URL == null && Folder_Name == null && File_Name == null) {
-    return;
-}
-else {
-    //checking Internet connection availablity
-    var networkState = navigator.connection.type;
-    if (networkState == Connection.NONE) {
-        return;
-    } else {
-        download(URL, Folder_Name, File_Name); //If available download function call
-   }
-  }
+function downloadFile(uri, folderName, fileName) {
+	//Parameters mismatch check
+	if (url == null && folderName == null && fileName == null) {
+		return;
+	}
+	else {
+		//checking Internet connection availablity
+		if (!navigator.onLine) {
+		    return;
+		} else {
+			state_map.folderName = folderName;
+			state_map.fileName = fileName;
+			state_map.uri = uri;
+		    download(uri, folderName, fileName); //If available download function call
+		}
+	}
 }
 
-function download(URL, Folder_Name, File_Name) {
+function download(url, folderName, fileName) {
 //step to request a file system 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, downloadFileToSystem, fileSystemFail);
 }
 
-function fileSystemSuccess(fileSystem) {
-    var download_link = encodeURI(URL);
-    ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
+function downloadFileToSystem(fileSystem) {
+    var download_link = state_map.url; 
+    //ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
 
     var directoryEntry = fileSystem.root; // to get root path of directory
-    directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+    directoryEntry.getDirectory(state_map.folderName, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
 
-    fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
+    fp = fp + "/" + (state_map.folderName.length > 0 ? state_map.folderName  + "/" : '') + state_map.fileName; //+ "." + ext; // fullpath and name of the file which we want to give
     // download function call
     filetransfer(download_link, fp);
 }
@@ -119,18 +180,23 @@ function onDirectorySuccess(parent) {
 
 function onDirectoryFail(error) {
     //Error while creating directory
-    alert("Unable to create new directory: " + error.code);
+    console.log("Unable to create new directory: " + error.code);
+}
+
+function onFail(error){
+	console.log(error);
 }
 
   function fileSystemFail(evt) {
     //Unable to access file system
-    alert(evt.target.error.code);
+    console.log(evt.target.error.code);
  }
 
+
 function filetransfer(download_link, fp) {
-var fileTransfer = new FileTransfer();
-// File download function with URL and local path
-fileTransfer.download(download_link, fp,
+	var fileTransfer = new FileTransfer();
+	// File download function with URL and local path
+	fileTransfer.download(download_link, fp,
                     function (entry) {
                         alert("download complete: " + entry.fullPath);
                     },
@@ -142,3 +208,14 @@ fileTransfer.download(download_link, fp,
                  }
             );
 }
+
+function gotFileEntry(fileEntry) {
+    fileEntry.createWriter(gotFileWriter, onFail);
+}
+
+function gotFileWriter(writer) {
+    writer.onwriteend = function(evt) {};
+
+    writer.write(state_map.data);
+}
+

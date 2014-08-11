@@ -18,10 +18,8 @@
 <script src="lib/underscore.js"></script>
 <script src="lib/backbone.js"></script>
 <script src="lib/foundation/js/foundation.min.js"></script>
-<script src="lib/foundation/js/foundation.dropdown.js"></script>
 <script src="lib/foundation/js/vendor/fastclick.js"></script>
-<script src="https://apis.google.com/js/platform.js">  {parsetags: 'explicit'}</script>
-<script src="lib/Cordova.js"></script>
+
 <!--<div class="g-savetodrive"
    data-src="//example.com/path/to/myfile.pdf"
    data-filename="My Statement.pdf"
@@ -33,7 +31,7 @@ img {
   height: 200px;       
   display: block;
   margin-left: auto;
-  margin-right: auto }
+  margin-right: auto;
 }
 
 body{
@@ -433,6 +431,7 @@ body{
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE END_____________________ -->
 <!--_______________________________________________________-->
+<script src="cordova.js"></script>
 
 <script type="text/javascript">
 // Wait for Cordova to load
@@ -447,9 +446,24 @@ function onDeviceReady() {
 
 $(document).foundation();
 
+function onDeviceReady(e){
+  console.log(   window.requestFileSystem != undefined);
+}
+
 $('.g-savetodrive').on('click', function(e){
   $this = $(this);
+ function onBodyLoad()
+    {
+    
+        //if phonegap, need to toggle these
+         if (typeof navigator.device == "undefined"){
+              document.addEventListener("deviceready", onDeviceReady, false);
+         } else {
+         onDeviceReady();
+         }
 
+    }
+    
 
 
   $this.attr('data-src', 'data:application/json;base64,' + 
@@ -458,7 +472,6 @@ $('.g-savetodrive').on('click', function(e){
   .attr('data-sitename', 'Backbone Library');
 });
 </script>
-
 <!-- Utilities -->
 <Script src="js/utility.js"></script>
 <!-- Models -->

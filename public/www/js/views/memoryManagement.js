@@ -9,21 +9,20 @@ app.memoryManagementView = Backbone.View.extend({
 
 	render: function () {
 		this.$el.html(this.template({}));
-		this.$saveTo = (this.$el.find('input:radio[name=saveTo]'));
-		this.$saveAs = (this.$el.find('input:radio[name=saveAs]'));
 		return this;
 	},
 
 	saveData: function(){
-		var filetype = this.$saveAs.val(),
-			filename = 'backboneLibrary' + '.' + filetype,
-			data = this.getSaveAsData(filetype, filename);
+		var filetype = this.$el.find('input:radio[name=saveAs]:checked').val();
+			var destination = this.$el.find('input:radio[name=saveTo]:checked').val();
+			var filename = 'backboneLibrary' + '.' + filetype;
+			var data = this.getSaveAsData(filetype, filename);
 
 		//call the appropriate api to save to the data
 		//to using the data previously packaged.
-		switch(this.$saveTo.val()){
+		switch(destination){
 			case 'local':
-				DownloadFile(data, '', filename);
+				writeFile(data, 'Backbone Library', filename);
 				break;
 			case 'googleDrive':
 				break;
@@ -37,7 +36,7 @@ app.memoryManagementView = Backbone.View.extend({
 	getSaveAsData: function (type, filename) {
 		var data = {
 				json: JSON.stringify(app.LibraryCollection),
-				csv: '' 
+				csv: ''
 			};
 			//compile the data into the correct data file
 			//prior to save

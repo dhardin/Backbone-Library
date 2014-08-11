@@ -15,7 +15,7 @@ var app = app || {};
 
 		},
 		{
-			coverImage: 'img/Backbone.jpg',
+			coverImage: 'img/backbone.jpg',
 			title: 'Developing Backbone.js Applications',
 
 		}
