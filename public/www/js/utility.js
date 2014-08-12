@@ -272,7 +272,7 @@ function fail(evt) {
 };
 
 
-function save(data, fileName, folder){
+function save(data, filename, folder){
 	//package collection as strinified array
 	data = data || JSON.stringify(app.LibraryCollection);
 	filename = filename || app.file_map.filename;
