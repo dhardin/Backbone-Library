@@ -23,5 +23,8 @@ Library Phone App that runs on Android, iPhone, Windows, and Blackberry.
    - files are located @  platforms\android\ant-build\
 6. Smile :)
 
-
-
+##Feature Roadmap
+- Save/Load from Google Drive/Dropbox
+- Add book by entering ISBN (we'll use either Google's or Amazon's API to query for info)
+- Add book by scanning barcode
+- Read book on device using Google's book reader API
