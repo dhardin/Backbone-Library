@@ -19,7 +19,7 @@
 <script src="lib/backbone.js"></script>
 <script src="lib/foundation/js/foundation.min.js"></script>
 <script src="lib/foundation/js/vendor/fastclick.js"></script>
-  
+
 <style>
 img {
   height: 200px;       
@@ -86,6 +86,7 @@ body{
         <li><a href="#/settings">Settings</a></li>
         <li><a href="#/about">About</a></li>
         <li><a href="#/contact">Contact</a></li>
+        <li><a href="#/exit">Exit</a></li>
       </ul>
     </aside>
 
@@ -112,7 +113,12 @@ body{
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE LIBRARY CONTENT END_____________________ -->
 <!--_______________________________________________________-->
-
+<script type="text/template" id="noBooksTemplate">
+   <p>
+      Sorry, you don't seem to have any books :(
+    </p>
+    <p>You should try adding some <a href="#/add">here</a>
+</script>
 <!--_______________________________________________________-->
 <!--_____________________TEMPLATE ABOUT CONTENT START_____________________ -->
 <!--_______________________________________________________-->
@@ -435,10 +441,14 @@ $(document).foundation();
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady(e){
-   navigator.splashscreen.hide();
+  var folder = 'backbone library',
+      file = 'backboneLibSave.json';
+
+ //  navigator.splashscreen.hide();
   readFile(folder, file, function(results){
-      app.LibraryCollection = results || [];
-  }
+      app.books = results || [];
+      app.LibraryCollection.reset(results);
+  });
 }
 
 </script>

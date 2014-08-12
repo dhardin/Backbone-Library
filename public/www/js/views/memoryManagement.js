@@ -15,14 +15,16 @@ app.memoryManagementView = Backbone.View.extend({
 	saveData: function(){
 		var filetype = this.$el.find('input:radio[name=saveAs]:checked').val();
 			var destination = this.$el.find('input:radio[name=saveTo]:checked').val();
-			var filename = 'backboneLibrary' + '.' + filetype;
+			var filename = 'backboneLibSave' + '.' + filetype;
 			var data = this.getSaveAsData(filetype, filename);
 
 		//call the appropriate api to save to the data
 		//to using the data previously packaged.
 		switch(destination){
 			case 'local':
-				writeFile(data, 'Backbone Library', filename);
+				writeFile(data, 'Backbone Library', filename, function(){
+					app_router.navigate('main', { trigger: true });
+				});
 				break;
 			case 'googleDrive':
 				break;

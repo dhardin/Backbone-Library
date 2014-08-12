@@ -4,6 +4,10 @@ var app = app || {},
 		fileName : '',
 		uri: '',
 		data: ''
+	},
+	callback_map = {
+		'read': '',
+		'write': ''
 	};
 
 Backbone.View.prototype.close = function(){
@@ -118,13 +122,14 @@ function encodeData(data, type){
 	return uri;
 }
 
-function writeFile(data, folderName, fileName){
+function writeFile(data, folderName, fileName, callback){
 	if (!data || !folderName || !fileName){
 		return;
 	}
 	state_map.folderName = folderName;
 	state_map.fileName = fileName;
 	state_map.data = data;
+	callback_map.write = callback || '';
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, writeDataToFile, fileSystemFail);
 }
 
@@ -137,15 +142,25 @@ function writeDataToFile(fileSystem){
 }
 
 function readFile(folderName, fileName, callback){
+	state_map.folderName = folderName;
+	state_map.fileName = fileName;
+	callback_map.read = callback || '';
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, readDataFromFile, fileSystemFail);
+	
+}
+
+function readDataFromFile(fileSystem){
 	var directoryEntry = fileSystem.root; // to get root path of directory
-    directoryEntry.getDirectory(state_map.folderName, { create: false, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+    directoryEntry.getDirectory(state_map.folderName, 
+    { create: false, exclusive: false }, 
+    onDirectorySuccess, 
+    onDirectoryFail); // creating folder in sdcard
+
     var rootdir = fileSystem.root;
    
 	fileSystem.root.getFile(state_map.folderName + '/' + state_map.fileName, 
 		{create: false, exclusive: false}, 
-		function(fileEntry, callback){
-			gotFileEntryRead(fileEntry,callback);
-		}, 
+		gotFileEntryRead, 
 		onFail);
 }
 
@@ -226,20 +241,27 @@ function gotFileEntryWrite(fileEntry) {
 
 
 function gotFileWriter(writer) {
-    writer.onwriteend = function(evt) {};
+    writer.onwriteend = function(evt) {
+    	if (callback_map.write != ''){
+    		callback_map.write();
+    	}
+    };
 
     writer.write(state_map.data);
 }
 
-function gotFileEntryRead(fileEntry, callback) {
-      fileEntry.file(function(file){gotFileRead(file, callback);}, fail);
+function gotFileEntryRead(fileEntry) {
+      fileEntry.file(gotFileRead, fail);
 }
 
-function gotFileRead(file, callback) {
+function gotFileRead(file) {
     var reader = new FileReader();
 
     reader.onloadend = function(evt) {
-        callback(evt.target.result);
+        if (callback_map.read != ''){
+        	var result = JSON.parse(evt.target.result);
+        	callback_map.read(result)
+        };
     };
 
     reader.readAsText(file);

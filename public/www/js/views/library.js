@@ -24,6 +24,7 @@ app.LibraryView = Backbone.View.extend({
 		this.$el.html(this.template());
 		this.$books = this.$el.find('#books'); 	
 		this.$filter = this.$el.find('#search');
+		if (this.collection.length > 0){
 		this.collection.each(function(item){	
 			if (i % MAX_ROW_ITEMS == 0){
 				$target = $('<div class="rows"></div>');
@@ -34,11 +35,16 @@ app.LibraryView = Backbone.View.extend({
 			this.renderBook(item, $target);
 
 		}, this);
+		} else {
+			this.$books.html($('#noBooksTemplate').html());
+		}
 	},
 
 	renderList: function(collection){
-		var i = 0, MAX_ROW_ITEMS = 4, $target;
-		this.$books.html('');
+		var i = 0, MAX_ROW_ITEMS = 4, $target,
+		totalItems = this.collection.length,
+		numItemsDisplayed = collection.toArray().length;
+		this.$books.html('Displaying ' + numItemsDisplayed + ' out of ' + totalItems);
 		collection.each(function(item){
 			if (i % MAX_ROW_ITEMS == 0){
 				$target = $('<div class="rows"></div>');
@@ -60,6 +66,10 @@ app.LibraryView = Backbone.View.extend({
 
 	search: function(e){
 		var text = this.$filter.val();
-		this.renderList(this.collection.search(text));
+		if (text.length > 0){
+			this.renderList(this.collection.search(text));
+		} else {
+			this.render(this.collection);
+		}
 	}
 });

@@ -17,7 +17,8 @@ app.BookEditView = Backbone.View.extend({
 
 	saveBook: function( e ) {
 		e.preventDefault();
-		var formData = {}, book;
+		var formData = {}, book,
+		data;
 
 
 		$( '#saveBook' ).find( 'input' ).each( function( i, el ) {
@@ -33,7 +34,10 @@ app.BookEditView = Backbone.View.extend({
 			book = new app.Book( formData );
 			app.LibraryCollection.add(book);
 		}
-		
+		//package collection as strinified array
+		data = JSON.stringify(app.LibraryCollection);
+		//save data
+		writeFile(data, app.file_map.folder, app.file_map.filename);
 		app_router.navigate('library', { trigger: true });
 	
 	}

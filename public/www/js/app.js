@@ -1,7 +1,7 @@
 var app = app || {};
 
 
-	books = [
+	/*books = [
 		{
 			coverImage: 'img/ejs.png',
 			title: 'JavaScript: The Good Parts',
@@ -19,7 +19,8 @@ var app = app || {};
 			title: 'Developing Backbone.js Applications',
 
 		}
-	];
- app.LibraryCollection = new app.Library(books);
+	];*/
+ app.LibraryCollection = new app.Library([]);
+ app.file_map = {filename: 'backboneLibSave.json', folder: 'backbone library'};
 
 	//new app.LibraryView(books);

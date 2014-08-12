@@ -8,7 +8,8 @@ var Router = Backbone.Router.extend({
 		'edit/:id': 'editBook',
 		'about': 'about',
 		'contact': 'contact',
-		'save-load': 'memoryManagement'
+		'save-load': 'memoryManagement',
+		'exit': 'exit'
 	},
 
 	 initialize: function(options){
@@ -39,6 +40,10 @@ var Router = Backbone.Router.extend({
 	memoryManagement: function(){
 		var memoryManagemetView = new app.memoryManagementView();
 		this.AppView.showView(memoryManagemetView);
+	},
+
+	exit: function(){
+		navigator.app.exitApp();
 	}
 });
 
