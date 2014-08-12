@@ -9,10 +9,12 @@ app.LibraryView = Backbone.View.extend({
 	},
 
 	initialize: function (initialBooks){
+		var folder = 'Backbone Library',
+			file = 'backboneLibSave.dat';
+
 		this.collection = app.LibraryCollection;
 		this.render();
 		
-
 		this.listenTo(this.collection, 'add', function(){app_router.navigate('//library', { trigger: true });});
 		this.listenTo(this.collection, 'reset', this.render)
 	},

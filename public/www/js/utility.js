@@ -129,11 +129,24 @@ function writeFile(data, folderName, fileName){
 }
 
 function writeDataToFile(fileSystem){
- //	var directoryEntry = fileSystem.root; // to get root path of directory
-    //directoryEntry.getDirectory(state_map.folderName, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
-   // var rootdir = fileSystem.root;
+    var directoryEntry = fileSystem.root; // to get root path of directory
+    directoryEntry.getDirectory(state_map.folderName, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+    var rootdir = fileSystem.root;
    
-	fileSystem.root.getFile(state_map.fileName, {create: true, exclusive: false}, gotFileEntry, onFail);
+	fileSystem.root.getFile(state_map.folderName + '/' + state_map.fileName, {create: true, exclusive: false}, gotFileEntryWrite, onFail);
+}
+
+function readFile(folderName, fileName, callback){
+	var directoryEntry = fileSystem.root; // to get root path of directory
+    directoryEntry.getDirectory(state_map.folderName, { create: false, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+    var rootdir = fileSystem.root;
+   
+	fileSystem.root.getFile(state_map.folderName + '/' + state_map.fileName, 
+		{create: false, exclusive: false}, 
+		function(fileEntry, callback){
+			gotFileEntryRead(fileEntry,callback);
+		}, 
+		onFail);
 }
 
 //First step check parameters mismatch and checking network connection if available call    download function
@@ -156,7 +169,7 @@ function downloadFile(uri, folderName, fileName) {
 }
 
 function download(url, folderName, fileName) {
-//step to request a file system 
+	//step to request a file system 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, downloadFileToSystem, fileSystemFail);
 }
 
@@ -203,19 +216,36 @@ function filetransfer(download_link, fp) {
                  function (error) {
                      //Download abort errors or download failed errors
                      alert("download error source " + error.source);
-                     //alert("download error target " + error.target);
-                     //alert("upload error code" + error.code);
                  }
             );
 }
 
-function gotFileEntry(fileEntry) {
+function gotFileEntryWrite(fileEntry) {
     fileEntry.createWriter(gotFileWriter, onFail);
 }
+
 
 function gotFileWriter(writer) {
     writer.onwriteend = function(evt) {};
 
     writer.write(state_map.data);
 }
+
+function gotFileEntryRead(fileEntry, callback) {
+      fileEntry.file(function(file){gotFileRead(file, callback);}, fail);
+}
+
+function gotFileRead(file, callback) {
+    var reader = new FileReader();
+
+    reader.onloadend = function(evt) {
+        callback(evt.target.result);
+    };
+
+    reader.readAsText(file);
+};
+
+var fail = function(evt) {
+    console.log(error.code);
+};
 

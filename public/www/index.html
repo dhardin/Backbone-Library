@@ -19,13 +19,7 @@
 <script src="lib/backbone.js"></script>
 <script src="lib/foundation/js/foundation.min.js"></script>
 <script src="lib/foundation/js/vendor/fastclick.js"></script>
-
-<!--<div class="g-savetodrive"
-   data-src="//example.com/path/to/myfile.pdf"
-   data-filename="My Statement.pdf"
-   data-sitename="My Company Name">
-</div>
--->   
+  
 <style>
 img {
   height: 200px;       
@@ -434,43 +428,19 @@ body{
 <script src="cordova.js"></script>
 
 <script type="text/javascript">
+$(document).foundation();
+
 // Wait for Cordova to load
 //
 document.addEventListener("deviceready", onDeviceReady, false);
 
-// Cordova is ready
-//
-function onDeviceReady() {
-  navigator.splashscreen.hide();
-}
-
-$(document).foundation();
-
 function onDeviceReady(e){
-  console.log(   window.requestFileSystem != undefined);
+   navigator.splashscreen.hide();
+  readFile(folder, file, function(results){
+      app.LibraryCollection = results || [];
+  }
 }
 
-$('.g-savetodrive').on('click', function(e){
-  $this = $(this);
- function onBodyLoad()
-    {
-    
-        //if phonegap, need to toggle these
-         if (typeof navigator.device == "undefined"){
-              document.addEventListener("deviceready", onDeviceReady, false);
-         } else {
-         onDeviceReady();
-         }
-
-    }
-    
-
-
-  $this.attr('data-src', 'data:application/json;base64,' + 
-    window.btoa(unescape(encodeURIComponent(JSON.stringify(app.LibraryCollection.toJSON())))))
-  .attr('data-filename', 'Backbone-Library.json')
-  .attr('data-sitename', 'Backbone Library');
-});
 </script>
 <!-- Utilities -->
 <Script src="js/utility.js"></script>
