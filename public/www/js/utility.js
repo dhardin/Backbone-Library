@@ -267,7 +267,17 @@ function gotFileRead(file) {
     reader.readAsText(file);
 };
 
-var fail = function(evt) {
+function fail(evt) {
     console.log(error.code);
 };
 
+
+function save(data, fileName, folder){
+	//package collection as strinified array
+	data = data || JSON.stringify(app.LibraryCollection);
+	filename = filename || app.file_map.filename;
+	folder = folder || app.file_map.folder;
+
+	//save data
+	writeFile(data, folder , filename);
+}

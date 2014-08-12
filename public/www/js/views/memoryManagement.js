@@ -22,9 +22,7 @@ app.memoryManagementView = Backbone.View.extend({
 		//to using the data previously packaged.
 		switch(destination){
 			case 'local':
-				writeFile(data, 'Backbone Library', filename, function(){
-					app_router.navigate('main', { trigger: true });
-				});
+				save(data, filename);
 				break;
 			case 'googleDrive':
 				break;

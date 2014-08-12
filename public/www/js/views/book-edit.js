@@ -34,10 +34,7 @@ app.BookEditView = Backbone.View.extend({
 			book = new app.Book( formData );
 			app.LibraryCollection.add(book);
 		}
-		//package collection as strinified array
-		data = JSON.stringify(app.LibraryCollection);
-		//save data
-		writeFile(data, app.file_map.folder, app.file_map.filename);
+		save();
 		app_router.navigate('library', { trigger: true });
 	
 	}

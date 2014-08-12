@@ -13,6 +13,8 @@ app.BookView = Backbone.View.extend({
 	editBook: function(e){
 		var cid = this.model.cid;
 		app_router.navigate('edit/' + cid, { trigger: true });
+		//package collection as strinified array
+		save();
 	},
 
 	deleteBook: function(e) {
@@ -20,6 +22,7 @@ app.BookView = Backbone.View.extend({
 		this.model.destroy();
 		// Delete view
 		this.remove();
+		save();
 	},
 
 	render: function () {
